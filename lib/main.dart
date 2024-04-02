@@ -85,12 +85,17 @@ class _GameAppState extends State<GameApp> {
 
 class PlayModule extends FlameGame
     with MouseMovementDetector, KeyboardEvents {
+
   @override
-  // TODO: implement world
-  World get world => super.world;
+  FutureOr<void> onLoad() async {
+    super.onLoad();
+    camera.viewfinder.anchor = Anchor.topLeft;
+    world.add(PlayArea());
+    startGame();
+  }
 
   void startGame() {
-
+    generateBullet(0, 0 , 1, 15, 0, world);
   }
 
   @override
@@ -104,6 +109,17 @@ class PlayModule extends FlameGame
         startGame();
     }
     return KeyEventResult.handled;
+  }
+}
+
+class PlayArea extends RectangleComponent {
+  PlayArea() : super(children: [RectangleHitbox()]);
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    size = Vector2(width, height);
+
   }
 }
 
@@ -121,7 +137,9 @@ const predefinedColors = [
 ];
 
 const gameWidth = 840.0;
+double width = gameWidth;
 const gameHeight = 1600.0;
+double height = gameHeight;
 const scrollSpeed = 1.0;
 const bpm = 180;
 
