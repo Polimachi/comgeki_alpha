@@ -95,7 +95,9 @@ class PlayModule extends FlameGame
   }
 
   void startGame() {
-    generateBullet(0, 0, 0, 105, 0, world);
+    generateBullet(0, 0, 0, 1000, 0, world);
+
+    generateCircularPattern(0, 0, 200, 50, -10, 9, 0, 0, world);
   }
 
   @override

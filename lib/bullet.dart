@@ -12,7 +12,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
-void generateBullet(double initPositionX, double initPositionY, num theta, num velocity, int type, world) {
+void generateBullet(
+    double initPositionX,
+    double initPositionY,
+    num velocity,
+    num theta,
+    int type,
+    world) {
 
   double thetaTransformed = theta * math.pi / 180;
 
@@ -27,8 +33,33 @@ void generateBullet(double initPositionX, double initPositionY, num theta, num v
   }
 }
 
-void generatePattern(int patternType, Set<int> components) {
+void generateCircularPattern(
+    double initPositionX,
+    double initPositionY,
+    num velocity,
+    num initAngle,
+    num iterAngle,
+    int count,
+    int iterDelay,
+    int type,
+    world) {
+  for(int i=0;i<count;i=i+1) {
+    generateBullet( initPositionX,
+                    initPositionY,
+                    velocity,
+                    initAngle + iterAngle * i,
+                    type,
+                    world);
+    //await iterDelay
 
+  }
+}
+
+void generatePattern(int patternType, Set components) {
+  if (patternType == 0) // Circular
+  {
+    //generateCircularPattern();
+  }
 }
 
 class Bullet extends SpriteAnimationComponent
