@@ -9,21 +9,12 @@
 /// check out the codelab at https://docs.flutter.dev/brick-breaker.
 library;
 
-import 'dart:async';
-import 'dart:math' as math;
-
-import 'package:flame/collisions.dart';
-import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 
-import 'bullet.dart';
 
 void main() {
   runApp(const GameApp());
@@ -37,12 +28,12 @@ class GameApp extends StatefulWidget {
 }
 
 class _GameAppState extends State<GameApp> {
-  late final PlayModule game;
+  late final TestComponent game;
 
   @override
   void initState() {
     super.initState();
-    game = PlayModule();
+    game = TestComponent();
   }
 
   @override
@@ -83,27 +74,45 @@ class _GameAppState extends State<GameApp> {
   }
 }
 
-class PlayModule extends FlameGame
-    with MouseMovementDetector, KeyboardEvents {
+class TestComponent extends FlameGame
+with MouseMovementDetector {
+  static const speed = 100;
+  static final Paint _blue = BasicPalette.blue.paint();
+  static final Paint _white = BasicPalette.red.paint();
+  static final Vector2 objSize = Vector2.all(50);
+
+  Vector2 position = Vector2(400, 800);
+  Vector2? target;
+
+  bool onTarget = false;
+
   @override
-  // TODO: implement world
-  World get world => super.world;
+  void onMouseMove(PointerHoverInfo info) {
+    target = info.eventPosition.widget;
+  }
+    Rect _toRect() => position.toPositionedRect(objSize);
 
-  void startGame() {
-
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+    canvas.drawRect(
+      _toRect(),
+      onTarget ? _blue : _white,
+    );
   }
 
   @override
-  KeyEventResult onKeyEvent(
-    KeyEvent event,
-    Set<LogicalKeyboardKey> keysPressed,
-  ) {
-    super.onKeyEvent(event, keysPressed);
-    switch (event.logicalKey) {
-      case LogicalKeyboardKey.space:
-        startGame();
+  void update(double dt) {
+    final target = this.target;
+    super.update(dt);
+    if (target != null) {
+      onTarget = _toRect().contains(target.toOffset());
+
+      if (!onTarget) {
+        final dir = (target - position).normalized();
+        position += dir * (speed * dt);
+      }
     }
-    return KeyEventResult.handled;
   }
 }
 
