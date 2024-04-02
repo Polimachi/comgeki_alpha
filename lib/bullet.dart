@@ -13,13 +13,16 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 void generateBullet(double initPositionX, double initPositionY, num theta, num velocity, int type, world) {
+
+  double thetaTransformed = theta * math.pi / 180;
+
   if (type == 0) //circleBullet
   {
     world.add(circleBullet(
       velocity: 
-        Vector2((math.Random().nextDouble()-1), 10),
+        Vector2(velocity * math.sin(thetaTransformed), velocity * math.cos(thetaTransformed)),
       position:
-        Vector2(initPositionX + 840, initPositionY),
+        Vector2(initPositionX + 420, initPositionY),
       radius: 15));
   }
 }

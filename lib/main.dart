@@ -95,7 +95,7 @@ class PlayModule extends FlameGame
   }
 
   void startGame() {
-    generateBullet(0, 0 , 1, 15, 0, world);
+    generateBullet(0, 0, 0, 105, 0, world);
   }
 
   @override
