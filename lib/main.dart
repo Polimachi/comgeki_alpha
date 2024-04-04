@@ -14,11 +14,13 @@ import 'dart:math' as math;
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/debug.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
+import 'package:flame/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -91,13 +93,14 @@ class PlayModule extends FlameGame
     super.onLoad();
     camera.viewfinder.anchor = Anchor.topLeft;
     world.add(PlayArea());
+    world.add(TimeTrackComponent());
     startGame();
   }
-
+  
   void startGame() {
-    generateBullet(0, 0, 0, 1000, 0, world);
+    generateBullet(0, 0, 500, 0, 0, world);
+    generateCircularPattern(0, 0, 200, 50, -10, 9, 0.0, 0, world);
 
-    generateCircularPattern(0, 0, 200, 50, -10, 9, 0, 0, world);
   }
 
   @override

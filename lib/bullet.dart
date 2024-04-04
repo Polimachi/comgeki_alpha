@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:io';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -40,19 +41,32 @@ void generateCircularPattern(
     num initAngle,
     num iterAngle,
     int count,
-    int iterDelay,
+    double iterDelay,
     int type,
     world) {
-  for(int i=0;i<count;i=i+1) {
+    
     generateBullet( initPositionX,
                     initPositionY,
                     velocity,
-                    initAngle + iterAngle * i,
+                    initAngle + iterAngle,
                     type,
                     world);
-    //await iterDelay
 
-  }
+    if (count>0) {
+      world.add(TimerComponent( period: iterDelay,
+                                repeat:  false,
+                                onTick: () => generateCircularPattern(
+                                  initPositionX,
+                                  initPositionY,
+                                  velocity,
+                                  initAngle + iterAngle,
+                                  iterAngle,
+                                  count - 1,
+                                  iterDelay,
+                                  type,
+                                  world
+                                )));
+    }
 }
 
 void generatePattern(int patternType, Set components) {
