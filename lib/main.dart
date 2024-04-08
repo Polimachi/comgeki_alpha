@@ -15,8 +15,10 @@ import 'package:flame/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:metronome/metronome.dart';
 
 import 'bullet.dart';
+import 'gameSession.dart';
 
 void main() {
   runApp(const GameApp());
@@ -85,13 +87,13 @@ class PlayModule extends FlameGame
     camera.viewfinder.anchor = Anchor.topLeft;
     world.add(PlayArea());
     world.add(TimeTrackComponent());
+
     startGame();
   }
   
   void startGame() {
     generateBullet(0, 0, 500, 0, 0, world);
-    generateCircularPattern(0, 0, 200, 50, -10, 9, 0.0, 0, world);
-
+    generateCircularPattern(0, 0, 1000, 30, -1, 30, 0.015, 0, world);
   }
 
   @override
