@@ -15,10 +15,10 @@ import 'package:flame/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:metronome/metronome.dart';
+
+import 'package:time/time.dart';
 
 import 'bullet.dart';
-import 'gameSession.dart';
 
 void main() {
   runApp(const GameApp());
@@ -91,9 +91,17 @@ class PlayModule extends FlameGame
     startGame();
   }
   
-  void startGame() {
+  void startGame() async{
     generateBullet(0, 0, 500, 0, 0, world);
     generateCircularPattern(0, 0, 1000, 30, -1, 30, 0.015, 0, world);
+
+    final Duration interval = 50.milliseconds;
+
+    while (true) {
+      await interval;
+      await 1.seconds;
+      generateBullet(0, 0, 500, 0, 0, world);
+    }
   }
 
   @override
