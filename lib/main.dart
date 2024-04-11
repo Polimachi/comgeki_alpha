@@ -97,7 +97,7 @@ class PlayModule extends FlameGame
 
     final Duration interval = 50.milliseconds;
 
-    while (true) {
+    for(int i=8;i>0;i=i-1) {
       await interval;
       await 1.seconds;
       generateBullet(0, 0, 500, 0, 0, world);
