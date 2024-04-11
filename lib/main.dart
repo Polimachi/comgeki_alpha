@@ -81,8 +81,11 @@ class _GameAppState extends State<GameApp> {
 class PlayModule extends FlameGame
     with MouseMovementDetector, KeyboardEvents {
 
+  Timer interval = Timer(1,);
+  int elapsedSeconds = 0;
+
   @override
-  FutureOr<void> onLoad() async {
+  FutureOr<void> onLoad() {
     super.onLoad();
     camera.viewfinder.anchor = Anchor.topLeft;
     world.add(PlayArea());
@@ -95,13 +98,8 @@ class PlayModule extends FlameGame
     generateBullet(0, 0, 500, 0, 0, world);
     generateCircularPattern(0, 0, 1000, 30, -1, 30, 0.015, 0, world);
 
-    final Duration interval = 50.milliseconds;
-
-    for(int i=8;i>0;i=i-1) {
-      await interval;
-      await 1.seconds;
-      generateBullet(0, 0, 500, 0, 0, world);
-    }
+    interval = Timer(7, onTick: () => generateBullet(0, 0, 500, 0, 0, world), repeat: true,);
+    interval.update(5);
   }
 
   @override
