@@ -106,6 +106,15 @@ class PlayModule extends FlameGame
                                 repeat:  true,
                                 onTick: () => generateBullet(100, 0, 500, 0, 0, world)
                                 ));
+
+    int bpm = 180;
+    double tick = 1 / ( bpm / 60 );
+
+    world.add(TimerComponent( period: tick,
+                                repeat:  true,
+                                onTick: () => generateBullet(0, 0, 500, 0, 0, world)
+                                ));
+
   }
 
   @override
