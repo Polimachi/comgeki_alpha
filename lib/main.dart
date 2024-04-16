@@ -98,9 +98,13 @@ class PlayModule extends FlameGame
     generateBullet(0, 0, 500, 0, 0, world);
     generateCircularPattern(0, 0, 1000, 30, -1, 30, 0.015, 0, world);
 
-    world.add(TimerComponent( period: 3,
-                                repeat:  false,
-                                onTick: () => generateBullet(0, 0, 500, 0, 0, world)
+    world.add(TimerComponent( period: 0.25,
+                                repeat:  true,
+                                onTick: () => generateBullet(-100, 0, 500, 0, 0, world)
+                                ));
+    world.add(TimerComponent( period: 2,
+                                repeat:  true,
+                                onTick: () => generateBullet(100, 0, 500, 0, 0, world)
                                 ));
   }
 
