@@ -6,6 +6,7 @@ Being made by dart&flutter.
 
 Alpha version to make basis module.
 
+Figma has been used for some widget-design.
 
 
 # Flowchart of KeyInputEvent
