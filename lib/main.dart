@@ -1,24 +1,18 @@
 library;
 
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/debug.dart';
-import 'package:flame/effects.dart';
-import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
-import 'package:flame/palette.dart';
-import 'package:flame/timer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
-import 'package:time/time.dart';
 
 import 'bullet.dart';
+import 'chart_reader.dart';
 
 void main() {
   runApp(const GameApp());
@@ -95,21 +89,20 @@ class PlayModule extends FlameGame
   }
   
   void startGame() async{
-    generateBullet(0, 0, 500, 0, 0, world);
     generateCircularPattern(0, 0, 1000, 30, -1, 30, 0.015, 0, world);
 
-    int bpm = 180;
+    int bpm = 120;
     double tick = 1 / ( bpm / 60 );
     int step = 0;
 
     world.add(TimerComponent(period: tick,
                                 repeat:  true,
-                                onTick: () => generateBullet(0, 0, 500, 0, 0, world)
+                                onTick: () => step+=1
                                 ));
 
     world.add(TimerComponent(period: tick,
                                 repeat:  true,
-                                onTick: () => generateCircularPattern(0, 0, 1000, 30, -1, 30, 0.015, 0, world)
+                                onTick: () => executePattern(step, world)
                                 ));
   }
 
